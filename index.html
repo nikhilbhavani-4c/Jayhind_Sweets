@@ -37,7 +37,7 @@
   --radius-md: 14px;
   --radius-lg: 22px;
   --radius-full: 9999px;
-  --header-height: 72px;
+  --header-height: 68px;
 }
 
 *, *::before, *::after {
@@ -85,13 +85,12 @@ body::-webkit-scrollbar,
   -ms-overflow-style: none !important;
 }
 
-/* Prevent double-scrolling of background when modal or drawer is active */
-body.modal-open,
-body.drawer-open {
+/* Prevent double-scrolling of background when modal is active */
+body.modal-open {
   overflow: hidden !important;
 }
 
-/* Anchor link scrolling offset to prevent content going behind sticky header */
+/* Anchor link scrolling offset so nothing gets sliced under the sticky header */
 #menu,
 .content,
 .catalog,
@@ -127,13 +126,13 @@ a {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(14px, 3.5vw, 32px);
-  padding-right: clamp(14px, 3.5vw, 32px);
+  padding-left: clamp(12px, 3.5vw, 32px);
+  padding-right: clamp(12px, 3.5vw, 32px);
   width: 100%;
 }
 
 /* ==========================================================================
-   TOP NOTIFICATION BAR
+   TOP NOTIFICATION BAR (Compact, single-line on all screens)
    ========================================================================== */
 .topbar {
   background: var(--wine-dark);
@@ -142,14 +141,16 @@ a {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 7px 14px;
+  padding: 6px 12px;
   text-align: center;
   border-bottom: 1px solid rgba(201, 155, 75, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topbar-sep {
@@ -158,7 +159,7 @@ a {
 }
 
 /* ==========================================================================
-   HEADER & NAVIGATION
+   HEADER & NAVIGATION (Guaranteed No Horizontal Overflow)
    ========================================================================== */
 .site-header {
   background: rgba(255, 250, 242, 0.98);
@@ -168,31 +169,33 @@ a {
   z-index: 40;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 2px 12px rgba(88, 15, 29, 0.04);
+  box-shadow: 0 2px 10px rgba(88, 15, 29, 0.04);
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 10px;
   min-height: var(--header-height);
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 100%;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
   color: inherit;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .brand-logo-wrap {
-  width: 70px;
-  height: 52px;
+  width: 60px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,30 +212,37 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 .brand-copy strong {
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(18px, 2.5vw, 24px);
+  font-size: clamp(17px, 2.4vw, 23px);
   font-weight: 700;
   color: var(--wine);
   line-height: 1.15;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brand-copy span {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--muted);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 600;
   margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
@@ -241,7 +251,7 @@ a {
   text-decoration: none;
   font-weight: 700;
   font-size: 13px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-radius: var(--radius-full);
   transition: background 0.15s, color 0.15s;
 }
@@ -254,36 +264,42 @@ a {
 .cart-button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   border-radius: var(--radius-full);
   background: var(--wine);
   color: var(--white);
   font-weight: 700;
-  font-size: 13px;
-  padding: 9px 16px;
-  box-shadow: 0 4px 14px rgba(121, 26, 43, 0.22);
+  font-size: 12.5px;
+  padding: 8px 14px;
+  box-shadow: 0 3px 12px rgba(121, 26, 43, 0.22);
   transition: all 0.2s ease;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .cart-button:hover {
   background: var(--wine-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(121, 26, 43, 0.28);
+  box-shadow: 0 5px 16px rgba(121, 26, 43, 0.28);
 }
 
 .cart-button:active {
   transform: translateY(0);
 }
 
+.cart-btn-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
 .cart-badge {
   background: var(--gold-light);
   color: var(--wine-dark);
   font-weight: 800;
-  font-size: 11.5px;
+  font-size: 11px;
   padding: 2px 7px;
   border-radius: var(--radius-full);
-  min-width: 20px;
+  min-width: 18px;
   text-align: center;
 }
 
@@ -291,8 +307,8 @@ a {
    HERO SECTION
    ========================================================================== */
 .hero {
-  margin-top: clamp(16px, 3vw, 28px);
-  margin-bottom: clamp(20px, 3.5vw, 32px);
+  margin-top: clamp(14px, 2.5vw, 24px);
+  margin-bottom: clamp(18px, 3vw, 30px);
 }
 
 .hero-card {
@@ -301,23 +317,22 @@ a {
   border-radius: var(--radius-lg);
   background: linear-gradient(130deg, var(--wine-deep) 0%, var(--wine-dark) 55%, var(--wine) 100%);
   color: #fff7eb;
-  padding: clamp(22px, 4vw, 44px);
+  padding: clamp(20px, 3.8vw, 42px);
   box-shadow: var(--shadow-lg);
   border: 1px solid rgba(201, 155, 75, 0.3);
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
-  gap: clamp(20px, 3.5vw, 36px);
+  gap: clamp(18px, 3vw, 32px);
 }
 
-/* Decorative subtle gold circular glow */
 .hero-card::after {
   content: "";
   position: absolute;
   right: -60px;
   top: -80px;
-  width: 340px;
-  height: 340px;
+  width: 320px;
+  height: 320px;
   border: 1px solid rgba(239, 203, 133, 0.22);
   border-radius: 50%;
   box-shadow: 0 0 0 24px rgba(239, 203, 133, 0.04), 0 0 0 54px rgba(239, 203, 133, 0.03);
@@ -339,7 +354,7 @@ a {
   background: rgba(201, 155, 75, 0.18);
   border: 1px solid rgba(201, 155, 75, 0.4);
   color: #f7eed8;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -357,26 +372,26 @@ a {
 
 .hero h1 {
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(26px, 4.2vw, 48px);
+  font-size: clamp(24px, 4vw, 44px);
   font-weight: 700;
   line-height: 1.12;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: #fffaf0;
   letter-spacing: -0.015em;
 }
 
 .hero p {
   color: #f4e4d5;
-  font-size: clamp(13px, 1.3vw, 15.5px);
+  font-size: clamp(13px, 1.3vw, 15px);
   line-height: 1.55;
-  margin: 0 0 20px;
+  margin: 0 0 18px;
   max-width: 480px;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -388,10 +403,10 @@ a {
   background: #f4d693;
   color: #4a111c;
   font-weight: 800;
-  font-size: 14px;
-  padding: 12px 24px;
+  font-size: 13.5px;
+  padding: 12px 22px;
   border-radius: var(--radius-full);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
   white-space: nowrap;
 }
@@ -399,7 +414,7 @@ a {
 .primary-button:hover {
   background: #fae2ab;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.26);
 }
 
 .primary-button:active {
@@ -409,7 +424,7 @@ a {
 .hero-pills {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   color: #ecd2b0;
   font-size: 11.5px;
   font-weight: 600;
@@ -427,18 +442,18 @@ a {
 .heritage-frame {
   position: relative;
   border-radius: 16px;
-  padding: 8px;
+  padding: 7px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(239, 203, 133, 0.35);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(8px);
-  max-width: 360px;
+  max-width: 340px;
   width: 100%;
 }
 
 .heritage-img {
   width: 100%;
-  height: 200px;
+  height: 190px;
   object-fit: cover;
   border-radius: 10px;
   filter: contrast(1.04) brightness(0.98);
@@ -455,7 +470,7 @@ a {
 }
 
 /* ==========================================================================
-   MAIN CONTENT & LAYOUT (Catalog + Cart)
+   MAIN CONTENT & 2-COLUMN LAYOUT (Catalog + Cart Panel)
    ========================================================================== */
 .content {
   display: grid;
@@ -475,14 +490,14 @@ a {
   align-items: flex-end;
   justify-content: space-between;
   gap: 14px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
 .catalog-title-block h2 {
   font-family: "Playfair Display", Georgia, serif;
   color: var(--wine);
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(22px, 3vw, 28px);
   font-weight: 700;
   margin: 0;
   line-height: 1.15;
@@ -531,7 +546,7 @@ a {
   color: #9c8e88;
 }
 
-/* Tabs */
+/* Filter Tabs */
 .tabs {
   display: flex;
   gap: 8px;
@@ -581,8 +596,6 @@ a {
 
 /* ==========================================================================
    PRODUCT GRID & CARDS
-   Properly aligned geometry: uniform padding, equal height rows,
-   aligned bottom controls on every card.
    ========================================================================== */
 .product-grid {
   display: grid;
@@ -630,7 +643,6 @@ a {
   border-radius: var(--radius-full);
 }
 
-/* Authentic Indian Pure Veg Symbol (Green square with green dot) */
 .veg-badge {
   width: 14px;
   height: 14px;
@@ -659,7 +671,6 @@ a {
   line-height: 1.25;
 }
 
-/* Structured Price Box */
 .price-box {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -695,7 +706,6 @@ a {
   margin-top: 1px;
 }
 
-/* Controls pushed to bottom of card so all cards in row are aligned */
 .product-controls {
   display: flex;
   align-items: center;
@@ -728,7 +738,7 @@ a {
 
 .add-button {
   height: 40px;
-  min-width: 80px;
+  min-width: 78px;
   padding: 0 14px;
   border: 0;
   border-radius: 10px;
@@ -753,7 +763,6 @@ a {
   transform: scale(0.97);
 }
 
-/* Empty state */
 .empty {
   padding: 36px 16px;
   text-align: center;
@@ -772,15 +781,12 @@ a {
 }
 
 /* ==========================================================================
-   CART PANEL (Desktop Sidebar + Mobile Slide-up Drawer)
-   Desktop: Sticky right sidebar
-   Mobile (< 900px): Smooth slide-up bottom drawer that NEVER overlaps
-   the catalog or gets sliced by the header!
+   BASKET CART PANEL ("basket kart")
+   Always visible, beautiful, and fully functional across ALL viewports:
+   - Desktop: Sticky sidebar on right
+   - Mobile: Clean dedicated card placed right below the catalog,
+     with instant 1-tap smooth scrolling from the header "Basket" button!
    ========================================================================== */
-.cart-overlay {
-  display: none;
-}
-
 .cart-panel {
   background: var(--white);
   border: 1px solid var(--line);
@@ -789,6 +795,7 @@ a {
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 /* Desktop sticky placement */
@@ -798,6 +805,17 @@ a {
     top: calc(var(--header-height) + 16px);
     max-height: calc(100vh - var(--header-height) - 32px);
   }
+}
+
+/* Visual pulse when jumped to */
+.cart-panel.highlight-cart {
+  animation: cartPulse 1.2s ease-out;
+}
+
+@keyframes cartPulse {
+  0% { box-shadow: 0 0 0 0 rgba(201, 155, 75, 0.6); border-color: var(--gold); }
+  50% { box-shadow: 0 0 0 10px rgba(201, 155, 75, 0.2); border-color: var(--wine); }
+  100% { box-shadow: var(--shadow); border-color: var(--line); }
 }
 
 .cart-title {
@@ -824,32 +842,8 @@ a {
   margin-top: 3px;
 }
 
-.cart-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .cart-bag-icon {
   font-size: 22px;
-}
-
-.cart-close-btn {
-  display: none; /* Only visible in mobile drawer */
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--line-light);
-  color: var(--ink);
-  font-size: 16px;
-  font-weight: 700;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s;
-}
-
-.cart-close-btn:hover {
-  background: var(--line);
 }
 
 /* Scrollable items list without visible scrollbar */
@@ -1030,7 +1024,7 @@ a {
   background: var(--wine-dark);
   color: var(--white);
   border-radius: var(--radius-full);
-  padding: 11px 18px;
+  padding: 10px 16px;
   box-shadow: 0 8px 24px rgba(88, 15, 29, 0.35);
   align-items: center;
   justify-content: space-between;
@@ -1053,7 +1047,7 @@ a {
 }
 
 .mobile-cart-count {
-  font-size: 10.5px;
+  font-size: 10px;
   color: #ecd2b0;
   font-weight: 700;
   text-transform: uppercase;
@@ -1061,7 +1055,7 @@ a {
 }
 
 .mobile-cart-total {
-  font-size: 16.5px;
+  font-size: 16px;
   font-weight: 800;
   color: #ffffff;
 }
@@ -1070,8 +1064,8 @@ a {
   background: #f4d693;
   color: #4a111c;
   font-weight: 800;
-  font-size: 13px;
-  padding: 8px 16px;
+  font-size: 12.5px;
+  padding: 8px 15px;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
@@ -1368,70 +1362,36 @@ a {
   }
 }
 
-/* Mobile & Tablet Mode (<= 900px) - Turns Cart into Clean Mobile Bottom Drawer */
+/* Mobile & Tablet Mode (<= 900px) - Dedicated, fully visible Basket Cart below Catalog */
 @media (max-width: 900px) {
   .content {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  /* Cart Overlay Backdrop on Mobile */
-  .cart-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(30, 9, 15, 0.65);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    z-index: 60;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  .cart-overlay.open {
-    display: block;
-    opacity: 1;
-  }
-
-  /* Cart transformed into an App-Style Slide-Up Drawer */
-  .cart-panel {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-height: 84vh;
-    border-radius: 24px 24px 0 0;
-    z-index: 65;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35);
-    transform: translateY(105%);
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-    background: #ffffff;
-    padding: 20px 20px calc(24px + env(safe-area-inset-bottom, 0px));
-    border: 1px solid var(--line);
-    border-bottom: 0;
-  }
-
-  .cart-panel.open {
-    transform: translateY(0);
-  }
-
-  .cart-close-btn {
     display: flex;
+    flex-direction: column;
+    gap: 32px;
   }
 
-  /* Handle drag bar for drawer */
-  .cart-drawer-handle {
-    width: 42px;
-    height: 4px;
-    background: #d9cbbe;
-    border-radius: 999px;
-    margin: -10px auto 14px;
+  .catalog {
+    order: 1;
+    width: 100%;
+  }
+
+  /* Cart panel prominently placed in the flow right below the catalog */
+  .cart-panel {
+    order: 2;
+    width: 100%;
+    position: static;
+    max-height: none;
+    margin-top: 8px;
+    box-shadow: 0 6px 24px rgba(88, 15, 29, 0.08);
+    border: 1.5px solid var(--line);
+    border-radius: 20px;
+    padding: 20px;
   }
 
   /* Hero on tablets */
   .hero-card {
     grid-template-columns: 1fr;
-    padding: 28px 22px;
+    padding: 26px 20px;
     gap: 20px;
   }
 
@@ -1458,78 +1418,87 @@ a {
 /* Samsung S23 & Mobile Phones (<= 580px) */
 @media (max-width: 580px) {
   :root {
-    --header-height: 64px;
+    --header-height: 60px;
   }
 
   .topbar {
-    font-size: 9.5px;
-    letter-spacing: 0.05em;
-    padding: 6px 10px;
-    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 5px 8px;
   }
 
   .nav {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    gap: 6px;
+  }
+
+  .brand {
+    gap: 6px;
   }
 
   .brand-logo-wrap {
-    width: 56px;
-    height: 42px;
+    width: 44px;
+    height: 34px;
   }
 
   .brand-copy strong {
-    font-size: 18px;
+    font-size: 16.5px;
   }
 
   .brand-copy span {
-    font-size: 8.5px;
-    letter-spacing: 0.1em;
+    display: none; /* Hide subtitle to keep header compact & clean */
   }
 
   .nav-link {
     display: none;
   }
 
+  /* Compact Cart button that NEVER overflows on 360px phones */
   .cart-button {
-    padding: 7px 12px;
+    padding: 7px 11px;
     font-size: 12px;
-    gap: 6px;
+    gap: 5px;
+  }
+
+  .cart-btn-text {
+    display: inline;
   }
 
   .cart-badge {
-    padding: 2px 6px;
+    padding: 1px 6px;
     font-size: 11px;
+    min-width: 16px;
   }
 
   .hero {
-    margin-top: 14px;
-    margin-bottom: 20px;
+    margin-top: 12px;
+    margin-bottom: 18px;
   }
 
   .hero-card {
-    padding: 22px 16px;
+    padding: 20px 16px;
     border-radius: var(--radius-md);
   }
 
   .eyebrow {
-    font-size: 10px;
+    font-size: 9.5px;
     padding: 4px 10px;
   }
 
   .hero h1 {
-    font-size: 27px;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin-bottom: 8px;
   }
 
   .hero p {
     font-size: 13px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .primary-button {
     width: 100%;
-    padding: 12px 18px;
+    padding: 12px 16px;
     font-size: 13.5px;
   }
 
@@ -1607,19 +1576,19 @@ a {
   }
 }
 
-/* Extra Small Phones (<= 360px) */
-@media (max-width: 360px) {
+/* Extra Small Phones (<= 350px) */
+@media (max-width: 350px) {
   .brand-copy strong {
-    font-size: 16.5px;
-  }
-
-  .brand-copy span {
-    display: none;
+    font-size: 15px;
   }
 
   .cart-button {
-    padding: 6px 10px;
-    font-size: 11.5px;
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+
+  .cart-btn-text {
+    display: none; /* Show only 🛍️ [0] on ultra-narrow 320px screens */
   }
 }
 
@@ -1654,13 +1623,11 @@ a {
 </head>
 <body>
 
-<!-- Announcement Bar -->
+<!-- Announcement Bar (Single-line, elegant) -->
 <div class="topbar">
   <span>A SWEET HERITAGE SINCE 1948</span>
   <span class="topbar-sep">•</span>
-  <span>PURE GHEE MITHAI & CRISP NAMKEEN</span>
-  <span class="topbar-sep">•</span>
-  <span>COUNTER PICKUP READY</span>
+  <span>PURE GHEE MITHAI & NAMKEEN</span>
 </div>
 
 <!-- Sticky Header -->
@@ -1679,7 +1646,8 @@ a {
       <div class="nav-actions">
         <a class="nav-link" href="#menu">Explore Menu</a>
         <button class="cart-button" id="cartJump" aria-label="View basket">
-          <span>Your Basket</span>
+          <span class="cart-btn-icon">🛍️</span>
+          <span class="cart-btn-text">Basket</span>
           <span class="cart-badge" id="cartCount">0</span>
         </button>
       </div>
@@ -1747,21 +1715,14 @@ a {
       <div class="product-grid" id="productGrid"></div>
     </section>
 
-    <!-- Mobile Drawer Overlay Backdrop -->
-    <div class="cart-overlay" id="cartOverlay"></div>
-
-    <!-- Cart Sidebar Panel (Desktop: Sticky Sidebar / Mobile: Bottom Drawer) -->
+    <!-- Basket Cart Panel (Desktop: Sticky Sidebar / Mobile: Prominent Card below Catalog) -->
     <aside class="cart-panel" id="cartPanel">
-      <div class="cart-drawer-handle" aria-hidden="true"></div>
       <div class="cart-title">
         <div class="cart-title-copy">
           <h2>Your basket</h2>
           <small id="cartSub">No items added yet</small>
         </div>
-        <div class="cart-header-actions">
-          <span class="cart-bag-icon">🛍️</span>
-          <button class="cart-close-btn" id="closeCartBtn" aria-label="Close basket drawer">✕</button>
-        </div>
+        <span class="cart-bag-icon">🛍️</span>
       </div>
 
       <div class="cart-items" id="cartItems">
@@ -1794,7 +1755,7 @@ a {
   </div>
 </main>
 
-<!-- Floating Mobile Checkout Bar -->
+<!-- Floating Mobile Checkout Bar (Appears when items are in basket) -->
 <div class="mobile-cart-bar" id="mobileCartBar">
   <div class="mobile-cart-info">
     <span class="mobile-cart-count" id="mobileCartCount">0 items</span>
@@ -1850,7 +1811,7 @@ a {
   </div>
 </div>
 
-<!-- Toast -->
+<!-- Toast Notification -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- JavaScript Logic -->
@@ -1982,7 +1943,7 @@ function renderCart() {
   const cartCountEl = document.getElementById("cartCount");
   if (cartCountEl) cartCountEl.textContent = count;
 
-  // Update cart sidebar / drawer
+  // Update cart sidebar
   const cartSubEl = document.getElementById("cartSub");
   if (cartSubEl) {
     cartSubEl.textContent = count ? count + (count === 1 ? " item" : " items") + " in your basket" : "No items added yet";
@@ -2057,29 +2018,14 @@ function toast(msg) {
   t._timer = setTimeout(() => t.classList.remove("show"), 2000);
 }
 
-// Drawer Open / Close Logic for Mobile
-function openCartDrawer() {
-  if (window.innerWidth <= 900) {
-    const cartPanel = document.getElementById("cartPanel");
-    const cartOverlay = document.getElementById("cartOverlay");
-    if (cartPanel) cartPanel.classList.add("open");
-    if (cartOverlay) cartOverlay.classList.add("open");
-    document.body.classList.add("drawer-open");
-  } else {
-    // Desktop: smoothly scroll into view if needed
-    const cartPanel = document.getElementById("cartPanel");
-    if (cartPanel) {
-      cartPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-}
-
-function closeCartDrawer() {
+// Smooth scroll to Cart Panel with visual highlight
+function scrollToCart() {
   const cartPanel = document.getElementById("cartPanel");
-  const cartOverlay = document.getElementById("cartOverlay");
-  if (cartPanel) cartPanel.classList.remove("open");
-  if (cartOverlay) cartOverlay.classList.remove("open");
-  document.body.classList.remove("drawer-open");
+  if (cartPanel) {
+    cartPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    cartPanel.classList.add("highlight-cart");
+    setTimeout(() => cartPanel.classList.remove("highlight-cart"), 1500);
+  }
 }
 
 function createOrder() {
@@ -2121,9 +2067,6 @@ function createOrder() {
       <b style="color:var(--wine)">${fmt(x.qty * x.price)}</b>
     </div>
   `).join("");
-
-  // Close mobile drawer if open
-  closeCartDrawer();
 
   // Show order receipt modal
   const modal = document.getElementById("orderModal");
@@ -2175,12 +2118,12 @@ if (printReceiptBtn) {
   printReceiptBtn.addEventListener("click", () => window.print());
 }
 
-// Cart Open Buttons (Header button + Floating mobile bar)
+// Basket click buttons (Header button + Floating mobile bar)
 const cartJumpBtn = document.getElementById("cartJump");
 if (cartJumpBtn) {
   cartJumpBtn.addEventListener("click", e => {
     e.preventDefault();
-    openCartDrawer();
+    scrollToCart();
   });
 }
 
@@ -2188,19 +2131,8 @@ const mobileCartBtn = document.getElementById("mobileCartBtn");
 if (mobileCartBtn) {
   mobileCartBtn.addEventListener("click", e => {
     e.preventDefault();
-    openCartDrawer();
+    scrollToCart();
   });
-}
-
-// Cart Drawer Close Button & Overlay click
-const closeCartBtn = document.getElementById("closeCartBtn");
-if (closeCartBtn) {
-  closeCartBtn.addEventListener("click", closeCartDrawer);
-}
-
-const cartOverlay = document.getElementById("cartOverlay");
-if (cartOverlay) {
-  cartOverlay.addEventListener("click", closeCartDrawer);
 }
 
 // Close modal on background click or Escape key
@@ -2212,22 +2144,14 @@ if (orderModal) {
 }
 
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    if (orderModal && orderModal.classList.contains("show")) {
-      closeModal();
-    } else {
-      closeCartDrawer();
-    }
+  if (e.key === "Escape" && orderModal && orderModal.classList.contains("show")) {
+    closeModal();
   }
 });
 
-// Window resize listener to handle drawer/mobile transition cleanly
+// Window resize listener
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 900) {
-    closeCartDrawer();
-  } else {
-    renderCart();
-  }
+  renderCart();
 });
 
 // Initial Render
